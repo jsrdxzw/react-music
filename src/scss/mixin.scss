@@ -1,0 +1,21 @@
+@import "./variable";
+@mixin no-wrap(){
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin flex($direction:column, $justify:null, $align:null){
+  display: flex;
+  flex-direction: $direction;
+  @if $justify {justify-content: $justify;}
+  @if $align {align-items: $align;}
+}
+
+@mixin button(){
+  padding: 10px;
+  outline: none;
+  background: $color-sub-theme;
+  color:$color-theme;
+  display: inline-block;
+}

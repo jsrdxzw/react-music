@@ -1,0 +1,27 @@
+.recommend-container {
+  width: 100%;
+  height: 100%;
+  .carousel {
+    img{
+      width: 100%;
+    }
+  }
+  .indicator-container{
+    position: relative;
+    top:-20px;
+    text-align: center;
+    .indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin: 0 5px;
+      background: #fafafa;
+      opacity: .7;
+      &.active{
+        opacity: 1;
+        background: white;
+      }
+    }
+  }
+}

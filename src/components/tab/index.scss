@@ -1,0 +1,22 @@
+@import "../../scss/variable";
+@import "../../scss/mixin";
+
+.tab-container {
+  margin: 15px auto;
+  @include flex(row, center, center);
+  a {
+    display: inline-block;
+    flex: 1;
+    text-align: center;
+    font-size: $font-size-large;
+    span{
+      padding: 0 2px 2px 2px;
+    }
+    &.active span{
+      color:$color-theme;
+      border-bottom: 2px solid $color-theme;
+    }
+  }
+}
+
+
