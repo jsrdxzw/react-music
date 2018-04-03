@@ -1,0 +1,27 @@
+@import "../../scss/mixin";
+@import "../../scss/variable";
+.disc-item-container{
+  @include flex(row,space-between,center);
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px 5%;
+  box-sizing: border-box;
+  img{
+    width: 60px;
+    height:60px;
+  }
+  >div{
+    width: 70%;
+    @include flex(column,space-around,left);
+    span:nth-child(1){
+      color:$color-text;
+      font-size: $font-size-medium;
+    }
+    span:nth-child(2){
+      margin-top: 10px;
+      font-size: $font-size-medium;
+      line-height: $font-size-large;
+      color:$color-text-d;
+    }
+  }
+}

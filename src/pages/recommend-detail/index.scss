@@ -1,0 +1,51 @@
+@import "../../scss/variable";
+@import "../../scss/mixin";
+
+.recommend-detail-container {
+  background: $color-background;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  .header {
+    position: relative;
+    .arrow {
+      position: absolute;
+      font-size: $font-size-large-x;
+      top: 10px;
+      left: 10px;
+      padding: 0 5px;
+      z-index: 1;
+    }
+    h3 {
+      position: absolute;
+      top: 12px;
+      z-index: 1;
+      width: 70%;
+      @include no-wrap();
+      left: 50%;
+      color: $color-theme;
+      transform: translate(-50%, 0);
+    }
+    img {
+      opacity: .7;
+      max-height: 300px;
+      width: 100%;
+    }
+  }
+  .list{
+    .song-item{
+      margin: 10px 20px;
+      h3{
+        color:$color-text;
+        padding: 10px 0;
+        @include no-wrap()
+      }
+      p{
+        color:$color-text-d;
+        @include no-wrap()
+      }
+    }
+  }
+}

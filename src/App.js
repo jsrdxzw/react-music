@@ -11,7 +11,6 @@ class App extends Component {
                 <MHeader/>
                 <Tab/>
                 <CommonRouter/>
-                <p>hello world</p>
             </div>
         )
     }
