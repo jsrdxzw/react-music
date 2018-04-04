@@ -61,7 +61,7 @@ export default class Recommend extends React.Component {
                 {this.getIndicator(sliders, index)}
                 <h1>热门歌单推荐</h1>
                 <div className="disc-container">
-                    {discs.map(disc => (
+                    {discs.map((disc) => (
                         <DiscItem disc={disc} key={disc.dissid}/>
                     ))}
                 </div>

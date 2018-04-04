@@ -40,7 +40,7 @@ export default class RecommendDetail extends React.Component {
                 </div>
                 <div className="list">
                     {songlist?songlist.map((song,index)=>(
-                        <div className={'song-item'} key={song.albumname} onClick={(e)=>this.selectSong(index)}>
+                        <div className={'song-item'} key={song.albumname+index} onClick={(e)=>this.selectSong(index)}>
                             <h3>{song.songname}</h3>
                             <p>{song.singer[0].name}</p>
                         </div>
