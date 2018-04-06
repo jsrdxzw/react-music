@@ -1,7 +1,9 @@
 import {observable, action, runInAction, computed} from 'mobx'
-import {removeDuplicate, shuffle} from "../utils/utils"
+import {removeDuplicate} from "../utils/utils"
 import {getSongList} from "../api/recommend"
+import {getSingerDetail} from '../api/singer'
 import {getLyric} from "../api/song"
+import {getMusicList} from '../api/rank'
 import Lyric from 'lyric-parser'
 
 class PlayModal {
@@ -10,22 +12,20 @@ class PlayModal {
     @observable modalShow = false
     @observable playModal = this.playModals[0] //默认顺序播放
     @observable currentLyric = null //播放歌曲的歌词
-    @observable  pureMusicLyric = '' //纯音乐
+    @observable pureMusicLyric = '' //纯音乐
     @observable pause = true //是否暂停
     @observable currentIndex = 0 //当前播放音乐的序号
+    @observable fullScreen = true //是否为全屏播放
     @observable disc = {}
 
     @action
-    switchModal = (isShow, index) => {
+    switchModal = (isShow) => {
         this.modalShow = !!isShow
-        if (isShow) {
-            this.currentIndex = index
-        }
     }
 
     @action
     getDisc = (dissid) => {
-        this.disc = {}
+        this._clearStatus()
         if (dissid) {
             getSongList(dissid).then(res => {
                 const cdlist = res && res.cdlist[0]
@@ -42,12 +42,48 @@ class PlayModal {
     }
 
     @action
-    getLyric = (songmid) => {
-        return getLyric(songmid).then(res => {
+    getSingerSong = (dissid, bgImage, title) => {
+        this._clearStatus()
+        if (dissid) {
+            getSingerDetail(dissid).then(res => {
+                const cdlist = res && res.data.list
+                const songlist = cdlist.map(cd => cd.musicData)
+                if (cdlist) {
+                    const logo = bgImage
+                    const dissname = title
+                    runInAction(() => {
+                        this.disc = {logo, dissname, songlist: songlist}
+                    })
+                }
+            }).catch(e => console.log(e))
+        }
+    }
+
+    @action
+    getRankSong = (id)=>{
+        this._clearStatus()
+        getMusicList(id).then(res=>{
+            const cdlist = res && res.songlist
+            const songlist = cdlist.map(cd => cd.data)
+            runInAction(()=>{
+                this.disc = {logo:res.topinfo.pic_album,dissname:res.topinfo.ListName,songlist: songlist}
+            })
+        })
+    }
+
+    @action
+    selectSong = (index)=>{
+        this.currentIndex = index
+        this.startPlaying()
+        this.getLyric(this.playing.songmid)
+    }
+
+    @action
+    getLyric = () => {
+         getLyric(this.playing.songmid).then(res => {
             runInAction(() => {
                 this.currentLyric = new Lyric(res)
             })
-            return Promise.resolve()
         }).catch(e => console.log(e))
     }
 
@@ -55,14 +91,14 @@ class PlayModal {
     nextIndex = () => {
         const songLength = this.disc.songlist.length
         this.currentIndex = (this.currentIndex + 1) % songLength
-        this.getLyric(this.playing.songmid)
+        this.getLyric(this.playing.songmid) //歌词还是得获取一下
     }
 
     @action
     prevIndex = () => {
         const songLength = this.disc.songlist.length
         this.currentIndex = (this.currentIndex - 1) < 0 ? songLength - 1 : this.currentIndex - 1
-        this.getLyric(this.playing.songmid)
+        this.getLyric(this.playing.songmid) //歌词还是得获取一下
     }
 
     @action
@@ -86,12 +122,17 @@ class PlayModal {
         this.playModal = this.playModals[index]
     }
 
+    @action
+    changeFullScreen = () => {
+        this.fullScreen = !this.fullScreen
+    }
+
     @computed get playing() {
-        return this.disc.songlist && this.disc.songlist[this.currentIndex]
+        return this.disc.songlist ? this.disc.songlist[this.currentIndex] : {}
     }
 
     @computed get percent() {
-        if(this.playing){
+        if (this.playing) {
             return (this.playTime / this.playing.interval) * 100
         }
         return 0
@@ -105,7 +146,7 @@ class PlayModal {
     }
 
     @computed get duration() {
-        let interval = this.playing.interval | 0
+        let interval = this.playing ? this.playing.interval | 0 : 0
         const minute = interval / 60 | 0
         const second = this._pad(interval % 60)
         return `${minute}:${second}`
@@ -122,10 +163,10 @@ class PlayModal {
             const _lyric = this.currentLyric.lines
             for (let i = 0; i < _lyric.length; i++) {
                 if (i === _lyric.length - 1) {
-                    return [_lyric[i].txt,i]
+                    return [_lyric[i].txt, i]
                 }
-                if (currentTime > _lyric[i].time && currentTime < _lyric[i + 1].time) {
-                    return [_lyric[i].txt,i]
+                if (currentTime > _lyric[i].time-1000 && currentTime < _lyric[i + 1].time) {
+                    return [_lyric[i].txt, i]
                 }
             }
         } else {
@@ -142,6 +183,20 @@ class PlayModal {
         }
         return num
     }
+
+    _clearStatus() {
+        this.playModals = ['sequence', 'repeat']
+        this.playTime = 0
+        this.modalShow = false
+        this.playModal = this.playModals[0]
+        this.currentLyric = null
+        this.pureMusicLyric = ''
+        this.pause = true
+        this.currentIndex = 0
+        this.fullScreen = true
+        this.disc = {}
+    }
+
 }
 
 const playModal = new PlayModal()

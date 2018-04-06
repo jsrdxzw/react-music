@@ -2,203 +2,268 @@
 @import "../../scss/mixin";
 
 .play-song-container {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  z-index: 100;
-  overflow: hidden;
-  background: $color-background;
-  animation: .3s scale ease;
-  &.dismiss {
-    animation: .3s dismiss ease forwards;
-  }
-  .background {
-    position: absolute;
-    left: 0;
-    right: 0;
+  .normal-player {
+    position: fixed;
     top: 0;
     bottom: 0;
+    width: 100%;
+    z-index: 100;
     overflow: hidden;
-    z-index: -1;
-    opacity: .6;
-    filter: blur(20px);
-  }
-  .top {
-    position: relative;
-    margin-bottom: 25px;
-    .back {
+    background: $color-background;
+    animation: .3s scale ease;
+    &.dismiss {
+      animation: .3s dismiss ease forwards;
+    }
+    &.minimize {
+      animation: .3s minimize ease forwards;
+    }
+    .background {
       position: absolute;
+      left: 0;
+      right: 0;
       top: 0;
-      left: 6px;
-      z-index: 50;
-      .icon-back {
-        padding: 9px;
-        font-size: $font-size-large-x;
-        color: $color-theme;
+      bottom: 0;
+      overflow: hidden;
+      z-index: -1;
+      opacity: .6;
+      filter: blur(20px);
+    }
+    .top {
+      position: relative;
+      margin-bottom: 25px;
+      .back {
+        position: absolute;
+        top: 0;
+        left: 6px;
+        z-index: 50;
+        .icon-back {
+          padding: 9px;
+          font-size: $font-size-large-x;
+          color: $color-theme;
+        }
+      }
+      .title {
+        width: 70%;
+        margin: 0 auto;
+        line-height: 40px;
+        text-align: center;
+        @include no-wrap();
+        font-size: $font-size-large;
+        color: $color-text
+      }
+      .sub-title {
+        line-height: 20px;
+        text-align: center;
+        font-size: $font-size-medium;
+        color: $color-text;
+      }
+      .close {
+        position: absolute;
+        top: 0;
+        right: 6px;
+        .icon-close {
+          padding: 9px;
+          font-size: $font-size-large-x;
+          color: $color-theme;
+        }
+      }
+    }
+    .middle {
+      position: fixed;
+      width: 100%;
+      top: 80px;
+      bottom: 170px;
+      white-space: nowrap;
+      font-size: 0;
+      .middle-l {
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-top: 80%;
+        .cd-wrapper {
+          position: absolute;
+          left: 10%;
+          top: 0;
+          width: 80%;
+          height: 100%;
+          .image {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 10px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            &.play {
+              animation: rotate 20s linear infinite;
+            }
+            &.pause {
+              animation-play-state: paused;
+            }
+          }
+        }
+        .playing-lyric-wrapper {
+          width: 80%;
+          margin: 30px auto 0 auto;
+          overflow: hidden;
+          text-align: center;
+          .playing-lyric {
+            height: 20px;
+            line-height: 20px;
+            font-size: $font-size-medium;
+            color: $color-text-l;
+          }
+        }
+      }
+      .middle-r {
+        display: inline-block;
+        vertical-align: top;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        .lyric-wrapper {
+          width: 80%;
+          margin: 0 auto;
+          overflow: hidden;
+          text-align: center;
+          .text {
+            line-height: 32px;
+            color: $color-text-l;
+            font-size: $font-size-medium;
+            &.current {
+              color: $color-text
+            }
+          }
+          .pure-music {
+            padding-top: 50%;
+            line-height: 32px;
+            color: $color-text-l;
+            font-size: $font-size-medium
+          }
+        }
 
       }
     }
-    .title {
-      width: 70%;
-      margin: 0 auto;
-      line-height: 40px;
-      text-align: center;
-      @include no-wrap();
-      font-size: $font-size-large;
-      color: $color-text
-    }
-    .sub-title {
-      line-height: 20px;
-      text-align: center;
-      font-size: $font-size-medium;
-      color: $color-text;
+    .bottom {
+      position: absolute;
+      bottom: 50px;
+      width: 100%;
+      .dot-wrapper {
+        text-align: center;
+        font-size: 0;
+        .dot {
+          display: inline-block;
+          vertical-align: middle;
+          margin: 0 4px;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: $color-text-l;
+          &.active {
+            width: 20px;
+            border-radius: 5px;
+            background: $color-text-ll;
+          }
+        }
+      }
+      .progress-wrapper {
+        display: flex;
+        align-items: center;
+        width: 80%;
+        margin: 0 auto;
+        padding: 10px 0;
+        .time {
+          color: $color-text;
+          font-size: $font-size-small;
+          flex: 0 0 30px;
+          line-height: 30px;
+          width: 30px;
+          &.time-l {
+            text-align: left;
+          }
+          &.time-r {
+            text-align: right;
+          }
+        }
+        .progress-bar-wrapper {
+          flex: 1;
+        }
+      }
+      .operators {
+        @include flex(row, space-between, center);
+        .icon {
+          flex: 1;
+          color: $color-theme;
+          font-size: 25px;
+          &.disabled {
+            color: $color-theme-d;
+          }
+          &.i-left {
+            text-align: right;
+          }
+          &.i-center {
+            text-align: center;
+          }
+          &.i-right {
+            text-align: left;
+          }
+        }
+
+      }
     }
   }
-  .middle {
+  .mini-player {
+    @include flex(row, space-around, center);
     position: fixed;
-    width: 100%;
-    top: 80px;
-    bottom: 170px;
-    white-space: nowrap;
-    font-size: 0;
-    .middle-l {
-      display: inline-block;
-      vertical-align: top;
-      position: relative;
-      width: 100%;
-      height: 0;
-      padding-top: 80%;
-      .cd-wrapper {
-        position: absolute;
-        left: 10%;
-        top: 0;
-        width: 80%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 180;
+    height: 60px;
+    background: $color-highlight-background;
+    .icon {
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
+      padding: 0 10px 0 20px;
+      .imgWrapper {
         height: 100%;
-        .image {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          box-sizing: border-box;
-          border: 10px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+        img {
           border-radius: 50%;
-          &.play{
-            animation: rotate 20s linear infinite;
+          &.play {
+            animation: rotate 10s linear infinite
           }
-          &.pause{
+          &.pause {
             animation-play-state: paused;
           }
         }
       }
-      .playing-lyric-wrapper{
-        width: 80%;
-        margin: 30px auto 0 auto;
-        overflow: hidden;
-        text-align: center;
-        .playing-lyric{
-          height:20px;
-          line-height: 20px;
-          font-size: $font-size-medium;
-          color:$color-text-l;
-        }
-      }
     }
-    .middle-r{
-      display: inline-block;
-      vertical-align: top;
-      width: 100%;
-      height: 100%;
+    .text {
+      @include flex(column, center);
+      flex: 1;
+      line-height: 20px;
       overflow: hidden;
-      .lyric-wrapper{
-        width: 80%;
-        margin: 0 auto;
-        overflow: hidden;
-        text-align: center;
-        .text{
-          line-height: 32px;
-          color: $color-text-l;
-          font-size: $font-size-medium;
-          &.current{
-            color: $color-text
-          }
-        }
-        .pure-music{
-          padding-top: 50%;
-          line-height: 32px;
-          color: $color-text-l;
-          font-size: $font-size-medium
-        }
-      }
-
-    }
-  }
-  .bottom{
-    position: absolute;
-    bottom:50px;
-    width:100%;
-    .dot-wrapper{
-      text-align: center;
-      font-size: 0;
-      .dot{
-        display: inline-block;
-        vertical-align: middle;
-        margin: 0 4px;
-        width:8px;
-        height:8px;
-        border-radius: 50%;
-        background: $color-text-l;
-        &.active{
-          width:20px;
-          border-radius: 5px;
-          background: $color-text-ll;
-        }
-      }
-    }
-    .progress-wrapper{
-      display: flex;
-      align-items: center;
-      width: 80%;
-      margin: 0 auto;
-      padding: 10px 0;
-      .time{
+      .name {
+        @include no-wrap();
+        margin-bottom: 2px;
+        font-size: $font-size-medium;
         color: $color-text;
-        font-size: $font-size-small;
-        flex: 0 0 30px;
-        line-height: 30px;
-        width: 30px;
-        &.time-l{
-          text-align: left;
-        }
-        &.time-r{
-          text-align: right;
-        }
       }
-      .progress-bar-wrapper{
-        flex: 1;
+      .desc {
+        @include no-wrap();
+        font-size: $font-size-small;
+        color: $color-text-d;
       }
     }
-    .operators{
-      @include flex(row,space-between,center);
-      .icon{
-        flex:1;
-        color:$color-theme;
-        font-size: 25px;
-        &.disabled{
-          color:$color-theme-d;
-        }
-        &.i-left{
-          text-align: right;
-        }
-        &.i-center{
-          text-align: center;
-        }
-        &.i-right{
-          text-align: left;
-        }
-      }
-
+    .control{
+      flex: 0 0 30px;
+      width: 30px;
+      padding: 0 10px;
     }
   }
 }
@@ -221,11 +286,22 @@
   }
 }
 
+@keyframes minimize {
+  0%{
+    transform: translate(0,0);
+    opacity: 1;
+  }
+  100%{
+    transform: translate(0,90%);
+    opacity: 0;
+  }
+}
+
 @keyframes rotate {
-   from{
-     transform: rotate(0deg);
-   }
-  to{
+  from {
+    transform: rotate(0deg);
+  }
+  to {
     transform: rotate(360deg);
   }
 }

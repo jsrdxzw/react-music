@@ -1,0 +1,26 @@
+@import "../../scss/variable";
+@import "../../scss/mixin";
+.singer-group-container{
+    .title{
+      height: 30px;
+      line-height: 30px;
+      padding-left: 20px;
+      font-size: $font-size-small;
+      color: $color-text-l;
+      background: $color-highlight-background;
+    }
+    .singer{
+      @include flex(row,null,center);
+      padding: 10px 0 10px 30px;
+      img{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+      div{
+        margin-left: 20px;
+        color: $color-text-l;
+        font-size: $font-size-medium;
+      }
+    }
+}

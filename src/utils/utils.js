@@ -1,22 +1,22 @@
 export function removeDuplicate(arr) {
     let arrs = [...arr]
     const unique = {}
-    arrs.forEach((item)=>{
+    arrs.forEach((item) => {
         unique[item.albumid] = item
     })
     arrs = []
-    for(let key in unique){
-        if(unique.hasOwnProperty(key)){
+    for (let key in unique) {
+        if (unique.hasOwnProperty(key)) {
             arrs.push(unique[key])
         }
     }
-    return arrs;
+    return arrs
 }
 
-export function shuffle(arr){
+export function shuffle(arr) {
     const _arr = arr.slice()
     let m = _arr.length
-    while (m){
+    while (m) {
         const i = Math.floor(Math.random() * m--)
         const t = _arr[m]
         _arr[m] = _arr[i]
@@ -56,4 +56,10 @@ export function prefixStyle(style) {
     }
 
     return _transform + style.charAt(0).toUpperCase() + style.substr(1)
+}
+
+export function parseQuery(str) {
+    const _arr = decodeURIComponent(str.substring(1))
+    const titleIndex = _arr.indexOf('title')
+    return {bgImage:_arr.substring(0,titleIndex).split("=")[1],title:_arr.substring(titleIndex).split("=")[1]}
 }

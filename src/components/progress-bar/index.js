@@ -10,16 +10,24 @@ export default class ProgressBar extends React.PureComponent {
         this.onTouchMove = this.onTouchMove.bind(this)
         this.onTouchEnd = this.onTouchEnd.bind(this)
         this.progressClick = this.progressClick.bind(this)
+        this.barWidth = 0
     }
 
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.percent&&nextProps.percent!==this.props.percent && !this.touch.initiated){
-            const barWidth = this.progressBar.clientWidth
-            const offset = (nextProps.percent/100)*barWidth
+            const offset = (nextProps.percent/100)*this.barWidth
             this.progress.style.width = `${offset}px`
             this.processBtn.style.left = `${7+offset}px`
         }
+    }
+
+
+    componentDidMount() {
+        this.barWidth = this.progressBar.clientWidth
+        const offset = (this.props.percent/100)*this.barWidth
+        this.progress.style.width = `${offset}px`
+        this.processBtn.style.left = `${7+offset}px`
     }
 
 
