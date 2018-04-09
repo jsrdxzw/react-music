@@ -5,6 +5,12 @@ import Singer from "../pages/singer"
 import Search from "../pages/search"
 import Rank from "../pages/rank"
 import MusicList from "../components/music-list"
+// import asyncComponent from '../components/async-component'
+
+// const Recommend = asyncComponent(()=>import('../pages/recommend'))
+// const Singer = asyncComponent(()=>import('../pages/singer'))
+// const Search = asyncComponent(()=>import('../pages/search'))
+// const Rank = asyncComponent(()=>import('../pages/rank'))
 
 export const CommonRouter = () => (
     <Switch>
@@ -18,3 +24,4 @@ export const CommonRouter = () => (
         <Route exact path={'/rank/:id'} component={(props)=><MusicList {...props} type={'rank'}/>}/>
     </Switch>
 )
+

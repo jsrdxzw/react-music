@@ -1,17 +1,18 @@
 const express = require('express')
 const axios = require('axios')
+const path = require('path')
 
 const app = new express();
 
-const allowCrossDomain = function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', "http://localhost:3000");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
-    res.header('Access-Control-Allow-Credentials', true);
-    next();
-};
+app.use(express.static(path.resolve(__dirname,'../build')));
 
-app.use(allowCrossDomain)
+app.get('*',(req,res,next)=>{
+    if(req.url.startsWith('/apiMusic')){
+        next()
+    } else {
+        res.sendFile(path.resolve(__dirname,'../build/index.html'))
+    }
+})
 
 app.get('/apiMusic/getDiscList',(req,res)=>{
     const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
@@ -55,6 +56,6 @@ app.get('/apiMusic/getRecommend/lyric',(req,res)=>{
 
 
 
-app.listen(3333,function () {
-    console.log('music api is listening at port 3333')
+app.listen(3336,function () {
+    console.log('music api is listening at port 3336')
 })

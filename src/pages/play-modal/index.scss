@@ -133,6 +133,7 @@
             line-height: 32px;
             color: $color-text-l;
             font-size: $font-size-medium;
+            @include no-wrap();
             &.current {
               color: $color-text
             }

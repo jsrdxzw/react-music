@@ -16,7 +16,7 @@ import PlayIcon2 from 'react-icons/lib/io/ios-play'
 import {observer, inject} from 'mobx-react'
 import ProgressCircle from "../../components/progress-circle"
 
-@observer
+
 @inject((states) => ({
     playing: states.playModal.playing,
     pause: states.playModal.pause,
@@ -36,6 +36,7 @@ import ProgressCircle from "../../components/progress-circle"
     getLyric: states.playModal.getLyric,
     changeFullScreen: states.playModal.changeFullScreen
 }))
+@observer
 export default class PlaySong extends React.Component {
 
     constructor(props) {
@@ -75,6 +76,8 @@ export default class PlaySong extends React.Component {
                 return <RepeatIcon className={'icon i-left'} onClick={this.changePlayModal}/>
             case 'repeat':
                 return <RepeatOneIcon className={'icon i-left'} onClick={this.changePlayModal}/>
+            default:
+                break;
         }
     }
 
@@ -119,6 +122,11 @@ export default class PlaySong extends React.Component {
                                         <p className={`text current`}>{playingLyric[0]}</p>
                                         <p className={`text`}>{currentLyric && currentLyric.lines[playingLyric[1] + 1] && currentLyric.lines[playingLyric[1] + 1].txt}</p>
                                         <p className={`text`}>{currentLyric && currentLyric.lines[playingLyric[1] + 2] && currentLyric.lines[playingLyric[1] + 2].txt}</p>
+                                        <p className={`text`}>{currentLyric && currentLyric.lines[playingLyric[1] + 3] && currentLyric.lines[playingLyric[1] + 3].txt}</p>
+                                        <p className={`text`}>{currentLyric && currentLyric.lines[playingLyric[1] + 4] && currentLyric.lines[playingLyric[1] + 4].txt}</p>
+                                        <p className={`text`}>{currentLyric && currentLyric.lines[playingLyric[1] + 5] && currentLyric.lines[playingLyric[1] + 5].txt}</p>
+                                        <p className={`text`}>{currentLyric && currentLyric.lines[playingLyric[1] + 6] && currentLyric.lines[playingLyric[1] + 6].txt}</p>
+                                        <p className={`text`}>{currentLyric && currentLyric.lines[playingLyric[1] + 7] && currentLyric.lines[playingLyric[1] + 7].txt}</p>
                                     </div>
                                 </div>
                             </div>
@@ -254,6 +262,7 @@ export default class PlaySong extends React.Component {
         this.lyricList.style[this.transform] = `translate(${offsetWidth}px,0)`
         this.lyricList.style[this.transitionDuration] = `${time}ms`
         this.middleL.style.opacity = opacity
+        this.lyricList.style.opacity = 1-opacity
         this.middleL.style[this.transitionDuration] = `${time}ms`
         this.touch.initiated = false
     }
@@ -292,15 +301,12 @@ export default class PlaySong extends React.Component {
         this.audio.currentTime = currentTime
         this.props.timeUpdate(currentTime)
     }
-
     nextMusic() { //切换下一首歌曲
         this.props.nextIndex()
     }
-
     prevMusic() {
         this.props.prevIndex()
     }
-
     minimizePlayer() {
         this.modal.setAttribute('class', 'normal-player minimize')
         this.timer = setTimeout(() => {
@@ -316,10 +322,7 @@ export default class PlaySong extends React.Component {
     getLyric(){
         this.props.getLyric()
     }
-
-
     componentWillUnmount() {
         this.timer && clearTimeout(this.timer)
     }
-
 }

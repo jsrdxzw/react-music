@@ -7,7 +7,7 @@ function MusicJsonCallback(data) {
 }
 
 export function getLyric(mid) {
-    const url = 'http://localhost:3333/apiMusic/getRecommend/lyric'
+    const url = '/apiMusic/getRecommend/lyric'
 
     const data = Object.assign({}, commonParams, {
         songmid: mid,

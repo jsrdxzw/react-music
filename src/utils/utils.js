@@ -63,3 +63,15 @@ export function parseQuery(str) {
     const titleIndex = _arr.indexOf('title')
     return {bgImage:_arr.substring(0,titleIndex).split("=")[1],title:_arr.substring(titleIndex).split("=")[1]}
 }
+
+export function debounce(func,delay) {
+    let timer = null
+    return function (...args) {
+        if(timer){
+            clearTimeout(timer)
+        }
+        timer = setTimeout(()=>{
+            func.apply(this,args)
+        },delay)
+    }
+}

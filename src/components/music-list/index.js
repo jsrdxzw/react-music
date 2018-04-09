@@ -15,9 +15,9 @@ import {parseQuery} from '../../utils/utils'
     fullScreen: stores.playModal.fullScreen,
     getDisc: stores.playModal.getDisc,
     getSingerSong: stores.playModal.getSingerSong,
-    selectSong:stores.playModal.selectSong,
+    selectSong: stores.playModal.selectSong,
     switchModal: stores.playModal.switchModal,
-    getRankSong:stores.playModal.getRankSong,
+    getRankSong: stores.playModal.getRankSong,
     startPlaying: stores.playModal.startPlaying
 }))
 @observer
@@ -27,7 +27,6 @@ export default class MusicList extends React.Component {
         this.handleBack = this.handleBack.bind(this)
         this.hiddenModal = this.hiddenModal.bind(this)
     }
-
     componentDidMount() {
         this.initData()
     }
@@ -71,7 +70,9 @@ export default class MusicList extends React.Component {
 
     hiddenModal(dismiss = false) {
         this.musicList.style.overflow = 'auto'
+        this.musicList.style.paddingBottom = '60px'
         if (dismiss) {
+            this.musicList.style.paddingBottom = '0'
             this.props.switchModal(false)
         }
     }
@@ -93,6 +94,8 @@ export default class MusicList extends React.Component {
                 break
             case 'rank':
                 this.props.getRankSong(dissid)
+                break
+            default:
                 break
         }
     }

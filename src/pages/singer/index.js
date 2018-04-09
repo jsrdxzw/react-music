@@ -4,11 +4,12 @@ import Loader from "../../components/loader"
 import './index.scss'
 import SingerGroup from "../../components/singer-group"
 
-@observer
+
 @inject((states) => ({
     getSingerList: states.singers.getSingerList,
     singerList: states.singers.singerList.slice() //是个二维数组
 }))
+@observer
 export default class Singer extends React.Component {
 
 

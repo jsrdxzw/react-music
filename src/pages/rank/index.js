@@ -4,11 +4,12 @@ import {withRouter} from 'react-router-dom'
 import './index.scss'
 import Loader from "../../components/loader"
 
-@observer
+
 @inject(states => ({
     topList: states.rank.topList,
     getTopList: states.rank.getTopList
 }))
+@observer
 @withRouter
 export default class Rank extends React.Component {
 
@@ -24,7 +25,7 @@ export default class Rank extends React.Component {
                     {topList.length ? topList.map(item => (
                         <li className={'item'} key={item.id} onClick={()=>this.selectItem(item.id)}>
                                 <div className={'icon'}>
-                                    <img width="100" height="100" src={item.picUrl}/>
+                                    <img width="100" height="100" src={item.picUrl} alt={''}/>
                                 </div>
                                 <ul className={'songlist'}>
                                     {item.songList && item.songList.map((song, index) => (

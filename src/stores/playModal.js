@@ -72,6 +72,15 @@ class PlayModal {
     }
 
     @action
+    getSearchSong = (song)=>{
+        if(song){
+            this.disc = {songlist:[song]}
+        } else {
+            this._clearStatus()
+        }
+    }
+
+    @action
     selectSong = (index)=>{
         this.currentIndex = index
         this.startPlaying()

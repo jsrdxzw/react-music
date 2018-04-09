@@ -15,7 +15,7 @@ export function getRecommend() {
 }
 
 export function getDiscList() {
-    const url = 'http://localhost:3333/apiMusic/getDiscList'
+    const url = '/apiMusic/getDiscList'
 
     const data = Object.assign({}, commonParams, {
         platform: 'yqq',
@@ -37,10 +37,8 @@ export function getDiscList() {
 
 export function getSongList(disstid) {
 
-    const url = 'http://localhost:3333/apiMusic/getRecommend/songs'
+    const url = '/apiMusic/getRecommend/songs'
 
-    // const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
-    //
     const data = Object.assign({}, commonParams, {
         disstid,
         type: 1,
@@ -57,6 +55,4 @@ export function getSongList(disstid) {
     }).then(res=>{
         return Promise.resolve(res.data)
     })
-    //
-    // return jsonp(url, data, options)
 }

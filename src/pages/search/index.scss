@@ -1,0 +1,26 @@
+@import "../../scss/variable";
+.search-container{
+  .search-box-wrapper{
+    margin: 30px 20px;
+  }
+  .shortcut-wrapper{
+    width: 100%;
+  }
+  .hot-key{
+    margin: 0 20px 20px 20px;
+    .title{
+      margin-bottom: 20px;
+      font-size: $font-size-medium;
+      color: $color-text-l;
+    }
+    .item{
+      display: inline-block;
+      padding: 5px 10px;
+      margin: 0 20px 10px 0;
+      border-radius: 6px;
+      background: $color-highlight-background;
+      font-size: $font-size-medium;
+      color: $color-text-d
+    }
+  }
+}
